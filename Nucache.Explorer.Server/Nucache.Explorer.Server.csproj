@@ -51,6 +51,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CSharpTest.Net.Collections">
+      <Version>14.906.1403.1082</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost">
       <Version>5.2.6</Version>
     </PackageReference>

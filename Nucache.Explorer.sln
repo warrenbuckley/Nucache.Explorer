@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nucache.Explorer.Server", "Nucache.Explorer.Server\Nucache.Explorer.Server.csproj", "{4E2D45EF-7B89-4948-AC8E-DE396905F42A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E2D45EF-7B89-4948-AC8E-DE396905F42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2D45EF-7B89-4948-AC8E-DE396905F42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2D45EF-7B89-4948-AC8E-DE396905F42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2D45EF-7B89-4948-AC8E-DE396905F42A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {43F85416-BCAB-44FD-8173-968287D03CD7}
+	EndGlobalSection
+EndGlobal

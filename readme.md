@@ -8,3 +8,6 @@ This approach was needed to be used, due to the third party library for storing 
 For more info on the approach, read the tutorial here:
 
 https://docs.microsoft.com/en-us/aspnet/aspnet/overview/owin-and-katana/an-overview-of-project-katana
+
+### Example Request
+`http://localhost:5698/api/Nucache/GetNuCacheData?filePath=C:\\Code\\Umbraco-CMS\\src\\Umbraco.Web.UI\\App_Data\\NuCache.Content.db`

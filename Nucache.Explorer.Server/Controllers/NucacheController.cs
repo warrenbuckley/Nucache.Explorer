@@ -11,7 +11,7 @@ namespace Nucache.Explorer.Server.Controllers
 {
     public class NucacheController : ApiController
     {
-        public string GetNuCacheData(string filePath)
+        public ApiResponse GetNuCacheData(string filePath)
         {
             //Check for valid filepath
             if (File.Exists(filePath) == false)
@@ -62,18 +62,22 @@ namespace Nucache.Explorer.Server.Controllers
                 }
             }
 
-            //Add to our JSON object the stopwatch clock to read the DB/dictionary file
-
-            var numberOfKits = kits.Length;
-
             foreach (var kit in kits)
             {
                 //Can I just reuse this object in JSON?!
                 var foo = kit.ContentTypeId;
-                
+
             }
 
-            return "foo";
+            //Add to our JSON object the stopwatch clock to read the DB/dictionary file
+            var response = new ApiResponse
+            {
+                Items = kits,
+                TotalItems = kits.Length,
+                StopClock = sw.ElapsedMilliseconds
+            };
+            
+            return response;
         }
     }
 }

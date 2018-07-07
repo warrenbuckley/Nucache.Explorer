@@ -1,7 +1,7 @@
 ﻿namespace Nucache.Explorer.Server.Models
 {
     // what's needed to actually build a content node
-    internal struct ContentNodeKit
+    public struct ContentNodeKit
     {
         public ContentNode Node;
         public int ContentTypeId;

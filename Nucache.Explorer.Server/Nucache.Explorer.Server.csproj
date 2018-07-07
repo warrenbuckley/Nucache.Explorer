@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentNodeKitSerializer.cs" />
+    <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\ContentData.cs" />
     <Compile Include="Models\ContentNode.cs" />
     <Compile Include="Models\ContentNodeKit.cs" />

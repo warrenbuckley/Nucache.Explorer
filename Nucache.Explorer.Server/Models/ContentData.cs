@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Nucache.Explorer.Server.Models
 {
     // represents everything that is specific to edited or published version
-    internal class ContentData
+    public class ContentData
     {
         public bool Published { get; set; }
 

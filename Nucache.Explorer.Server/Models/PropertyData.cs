@@ -2,7 +2,7 @@
 
 namespace Nucache.Explorer.Server.Models
 {
-    class PropertyData
+    public class PropertyData
     {
         [JsonProperty("culture")]
         public string Culture { get; set; }

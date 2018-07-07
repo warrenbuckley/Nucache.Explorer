@@ -5,7 +5,7 @@ namespace Nucache.Explorer.Server.Models
 {
     // represents a content "node" ie a pair of draft + published versions
     // internal, never exposed, to be accessed from ContentStore (only!)
-    class ContentNode
+    public class ContentNode
     {
         // 2-phases ctor, phase 1
         public ContentNode(int id, Guid uid,

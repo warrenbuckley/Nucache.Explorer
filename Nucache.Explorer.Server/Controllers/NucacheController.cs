@@ -5,6 +5,7 @@ using System.Web.Http;
 using CSharpTest.Net.Collections;
 using CSharpTest.Net.Serialization;
 using Nucache.Explorer.Server.Models;
+using Nucache.Explorer.Server.Serializer;
 
 
 namespace Nucache.Explorer.Server.Controllers
@@ -19,8 +20,12 @@ namespace Nucache.Explorer.Server.Controllers
                 //Throw error
             }
 
-            //Check for filetype or some kind of convention
-            //So we don't attempt to open any old file
+            //Check for file extension ends with .db
+            //Don't want to attempt to any old file type
+            if (Path.GetExtension(filePath) != ".db")
+            {
+                //Throw error
+            }
 
 
             //We need to create a temp copy of the nucache DB - to avoid file locks if its in use whilst we try to read it

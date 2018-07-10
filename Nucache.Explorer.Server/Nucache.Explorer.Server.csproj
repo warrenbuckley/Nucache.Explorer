@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -42,16 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentNodeKitSerializer.cs" />
+    <Compile Include="Extensions\KeyValuePairExtensions.cs" />
+    <Compile Include="Serializer\ContentDataSerializer.cs" />
+    <Compile Include="Serializer\ContentNodeKitSerializer.cs" />
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\ContentData.cs" />
     <Compile Include="Models\ContentNode.cs" />
     <Compile Include="Models\ContentNodeKit.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\NucacheController.cs" />
+    <Compile Include="Models\CultureVariation.cs" />
     <Compile Include="Models\PropertyData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializer\DictionaryOfCultureVariationSerializer.cs" />
+    <Compile Include="Serializer\DictionaryOfPropertyDataSerializer.cs" />
+    <Compile Include="Serializer\SerializerBase.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

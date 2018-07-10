@@ -26,5 +26,8 @@
   "homepage": "https://github.com/warrenbuckley/Nucache.Explorer#readme",
   "devDependencies": {
     "electron": "^2.0.4"
+  },
+  "dependencies": {
+    "electron-reload": "^1.2.5"
   }
 }

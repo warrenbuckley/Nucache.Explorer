@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "electron-reload": "^1.2.5",
+    "lodash": "^4.17.10",
     "node-fetch": "^2.1.2"
   }
 }

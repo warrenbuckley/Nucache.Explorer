@@ -1,0 +1,30 @@
+{
+  "name": "nucache.explorer.client",
+  "version": "1.0.0",
+  "description": "An electron application to read Umbraco V8+ NuCache binary files",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/warrenbuckley/Nucache.Explorer.git"
+  },
+  "keywords": [
+    "umbraco",
+    "umbraco-v8",
+    "nucache",
+    "electron",
+    "electron-app"
+  ],
+  "author": "Warren Buckley",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/warrenbuckley/Nucache.Explorer/issues"
+  },
+  "homepage": "https://github.com/warrenbuckley/Nucache.Explorer#readme",
+  "devDependencies": {
+    "electron": "^2.0.4"
+  }
+}

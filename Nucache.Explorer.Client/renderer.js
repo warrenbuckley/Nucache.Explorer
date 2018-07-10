@@ -14,6 +14,7 @@ ipcRenderer.on('nucache.data', (event, message) => {
     console.log('nucache.data', message);
     app.__vue__.$data.nucacheOpen = true;
     app.__vue__.$data.apiData = message;
+    app.__vue__.$data.totalDocuments = message.TotalItems;
 });
 
 

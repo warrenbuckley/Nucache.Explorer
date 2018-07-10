@@ -35,8 +35,8 @@
           <input v-model.number="documentPosition" type="number" id="documentPosition" min="1"  v-bind:max="apiData.TotalItems" />
         </div>
         <div>
-          <button>&laquo; Previous</button>
-          <button>Next &raquo;</button>
+          <button v-bind:disabled="!hasPrevious" v-on:click="documentPosition -= 1">&laquo; Previous</button>
+          <button v-bind:disabled="!hasNext" v-on:click="documentPosition += 1">Next &raquo;</button>
         </div>
 
         <pre>{{ apiData.Items[documentPosition-1] }}</pre>

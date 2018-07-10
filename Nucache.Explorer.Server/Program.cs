@@ -13,10 +13,8 @@ namespace Nucache.Explorer.Server
             using (WebApp.Start<Startup>(url: baseAddress))
             {
                 Console.WriteLine("Nucache Explorer Server: http://localhost:5698");
-                Console.WriteLine("Press Enter to quit.");
-                Console.ReadKey();
+                Console.Read();
             }
-
         }
     }
 }

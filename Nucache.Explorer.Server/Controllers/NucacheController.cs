@@ -17,14 +17,14 @@ namespace Nucache.Explorer.Server.Controllers
             //Check for valid filepath
             if (File.Exists(filePath) == false)
             {
-                //Throw error
+                //TODO: Throw error
             }
 
             //Check for file extension ends with .db
             //Don't want to attempt to any old file type
             if (Path.GetExtension(filePath) != ".db")
             {
-                //Throw error
+                //TODO: Throw error
             }
 
 
@@ -65,13 +65,6 @@ namespace Nucache.Explorer.Server.Controllers
                     if (attempts == 10)
                         throw;
                 }
-            }
-
-            foreach (var kit in kits)
-            {
-                //Can I just reuse this object in JSON?!
-                var foo = kit.ContentTypeId;
-
             }
 
             //Add to our JSON object the stopwatch clock to read the DB/dictionary file

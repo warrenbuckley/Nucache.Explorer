@@ -28,6 +28,7 @@
     "electron": "^2.0.4"
   },
   "dependencies": {
-    "electron-reload": "^1.2.5"
+    "electron-reload": "^1.2.5",
+    "node-fetch": "^2.1.2"
   }
 }

@@ -6,6 +6,10 @@ const process = require('child_process');
 // Live reload magic
 require('electron-reload')(__dirname);
 
+//Our Application Menu Items & logic
+require('./app-menu');
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win = BrowserWindow;

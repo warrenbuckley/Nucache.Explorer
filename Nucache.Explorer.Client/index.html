@@ -1,13 +1,55 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="UTF-8">
-      <title>NuCache Explorer</title>
-    </head>
-    <body>
-      <h1>Hello World!!!</h1>
-      We are using node <script>document.write(process.versions.node)</script>,
-      Chrome <script>document.write(process.versions.chrome)</script>,
-      and Electron <script>document.write(process.versions.electron)</script>.
-    </body>
-  </html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>NuCache Explorer</title>
+    
+    <!-- Vue JS Lib -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Infinite Loader (http://tobiasahlin.com/spinkit/) -->
+      <div class="spinner" v-if="isLoading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+
+      <!-- Empty State -->
+      <div v-if="!nucacheOpen && !isLoading">
+        <h1>Open a NuCache file</h1>
+      </div>
+
+      <!-- Raw Data -->
+      <div v-if="nucacheOpen && apiData">
+
+        <p>{{ apiData.TotalItems }} total items took {{ apiData.StopClock }} milliseconds to read</p>
+        <div>
+          Viewing <strong>{{ documentPosition }}</strong> of <strong>{{ apiData.TotalItems }}</strong> items
+              
+          <label for="currentDocument">Goto Item Number:</label>
+          <input v-model.number="documentPosition" type="number" id="documentPosition" min="1"  v-bind:max="apiData.TotalItems" />
+        </div>
+        <div>
+          <button>&laquo; Previous</button>
+          <button>Next &raquo;</button>
+        </div>
+
+        <pre>{{ apiData.Items[documentPosition-1] }}</pre>
+      </div>
+    </div>
+    
+    <script>
+      //The super simple Vue.js init
+      require('./app.js');
+
+      // Renderer - the proxy that listens from events/signals emitted from app-menu.js
+      // Which updates the properties in Vue - which thus updates our UI
+      require('./renderer.js');
+    </script>
+  </body>
+</html>

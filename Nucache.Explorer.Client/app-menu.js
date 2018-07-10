@@ -27,7 +27,7 @@ const template = [
                         updateMenuEnabledState('nucache.close', true);
 
                         //Send a signal/event to notify the main UI that we are loading
-                        focusedWindow.webContents.send('nucache.is.loading', true);
+                        focusedWindow.webContents.send('nucache.loading', true);
 
                         const baseDomain = 'http://localhost:5698/api/Nucache';
                         const selectedFile = filePaths[0];
@@ -39,13 +39,14 @@ const template = [
 
                             //404, 500 etc..
                             response.text().then((value) =>{
-                                focusedWindow.webContents.send("nucache.file.error", value);
+                                focusedWindow.webContents.send('nucache.error', value);
                             });
 
                         }).then((serverJson)=> {
                             console.log('server JSON', serverJson);
                             if(serverJson){
-                                focusedWindow.webContents.send("nucache.data", serverJson);
+                                focusedWindow.webContents.send('nucache.data', serverJson);
+                                focusedWindow.webContents.send('nucache.loading', false);
                             }
                         });
                     });

@@ -9,19 +9,7 @@ const template = [
                 id:'nucache.open',
                 label: 'Open NuCache',
                 click: (menuItem, focusedWindow) => {
-                    dialog.showOpenDialog({
-                        title: "Open NuCache",
-                        filters: [{name: 'NuCache DB', extensions: ['db']}],
-                        properties: ['openFile']
-                    }, (filePaths) =>{
-                        //Check we have something selected
-                        if(!filePaths) {
-                            return;
-                        }
-
-                        //Call the Web API with the selected file
-                        openFile(filePaths[0], focusedWindow);
-                    });
+                    openFileDialog(focusedWindow);
                 }
             },
             {
@@ -114,6 +102,22 @@ function openFile(filePath, focusedWindow){
     });
 }
 
+function openFileDialog(focusedWindow){
+    dialog.showOpenDialog({
+        title: "Open NuCache",
+        filters: [{name: 'NuCache DB', extensions: ['db']}],
+        properties: ['openFile']
+    }, (filePaths) =>{
+        //Check we have something selected
+        if(!filePaths) {
+            return;
+        }
+
+        //Call the Web API with the selected file
+        openFile(filePaths[0], focusedWindow);
+    });
+}
+
 const { ipcMain, webContents } = require('electron');
 ipcMain.on('dragged-file', (event, arg) => {
     //arg contains the filepath to the dragged file
@@ -125,4 +129,15 @@ ipcMain.on('dragged-file', (event, arg) => {
     console.log('currentWindow', currentWindow);
     openFile(arg, currentWindow);
 
+});
+
+ipcMain.on('open-file-dialog', (event, arg) => {
+    //arg is empty - we simply wanting to be notified that user trying to open a file dialog
+
+    //Get focused window
+    var allWindows = webContents.getAllWebContents();
+    var currentWindow = allWindows[0];
+    
+    console.log('currentWindow', currentWindow);
+    openFileDialog(currentWindow);
 });

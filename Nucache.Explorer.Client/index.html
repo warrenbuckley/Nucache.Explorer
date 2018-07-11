@@ -55,7 +55,7 @@
           v-on:dragleave.prevent="removeDragOver"
           v-on:dragend.prevent="removeDragOver"
           v-bind:class="{ isDragover: isDragging }">
-          <p>Select or Drop a NuCache file</p>
+          <button v-on:click.stop.prevent="openFileDialog">Select or Drop a NuCache file</button>
         </div>
       </div>
 

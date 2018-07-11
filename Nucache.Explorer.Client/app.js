@@ -60,6 +60,10 @@ var app = new Vue({
             console.log('remove drag');
             //Remove some CSS class .is-dragover
             this.isDragging = false;
+        },
+        openFileDialog: function(e){
+            //Tell main.js / app-menu.js to open a file dialog window
+            ipcRenderer.send('open-file-dialog');
         }
     },
     watch: {

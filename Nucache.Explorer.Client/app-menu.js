@@ -14,41 +14,13 @@ const template = [
                         filters: [{name: 'NuCache DB', extensions: ['db']}],
                         properties: ['openFile']
                     }, (filePaths) =>{
-
-                        //Callback function when a file is selected
-
                         //Check we have something selected
                         if(!filePaths) {
                             return;
                         }
 
-                        //Disable the file open menu item & enable the close menu item
-                        updateMenuEnabledState('nucache.open', false);
-                        updateMenuEnabledState('nucache.close', true);
-
-                        //Send a signal/event to notify the main UI that we are loading
-                        focusedWindow.webContents.send('nucache.loading', true);
-
-                        const baseDomain = 'http://localhost:5698/api/Nucache';
-                        const selectedFile = filePaths[0];
-
-                        fetch(`${baseDomain}/GetNuCacheData?filePath=${selectedFile}`).then((response) => {
-                            if(response.ok) {
-                                return response.json();
-                            }
-
-                            //404, 500 etc..
-                            response.text().then((value) =>{
-                                focusedWindow.webContents.send('nucache.error', value);
-                            });
-
-                        }).then((serverJson)=> {
-                            console.log('server JSON', serverJson);
-                            if(serverJson){
-                                focusedWindow.webContents.send('nucache.data', serverJson);
-                                focusedWindow.webContents.send('nucache.loading', false);
-                            }
-                        });
+                        //Call the Web API with the selected file
+                        openFile(filePaths[0], focusedWindow);
                     });
                 }
             },
@@ -111,3 +83,46 @@ function updateMenuEnabledState(menuId, enabledState){
         menuToUpdate.enabled = enabledState;
     }
 };
+
+function openFile(filePath, focusedWindow){
+    //Disable the file open menu item & enable the close menu item
+    updateMenuEnabledState('nucache.open', false);
+    updateMenuEnabledState('nucache.close', true);
+
+    //Send a signal/event to notify the main UI that we are loading
+    focusedWindow.webContents.send('nucache.loading', true);
+
+    const baseDomain = 'http://localhost:5698/api/Nucache';
+    
+
+    fetch(`${baseDomain}/GetNuCacheData?filePath=${filePath}`).then((response) => {
+        if(response.ok) {
+            return response.json();
+        }
+
+        //404, 500 etc..
+        response.text().then((value) =>{
+            focusedWindow.webContents.send('nucache.error', value);
+        });
+
+    }).then((serverJson)=> {
+        console.log('server JSON', serverJson);
+        if(serverJson){
+            focusedWindow.webContents.send('nucache.data', serverJson);
+            focusedWindow.webContents.send('nucache.loading', false);
+        }
+    });
+}
+
+const { ipcMain, webContents } = require('electron');
+ipcMain.on('dragged-file', (event, arg) => {
+    //arg contains the filepath to the dragged file
+
+    //Get focused window
+    var allWindows = webContents.getAllWebContents();
+    var currentWindow = allWindows[0];
+    
+    console.log('currentWindow', currentWindow);
+    openFile(arg, currentWindow);
+
+});

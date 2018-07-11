@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "publish": "electron-builder --publish onTagOrDraft"
   },
   "repository": {
     "type": "git",
@@ -25,11 +27,38 @@
   },
   "homepage": "https://github.com/warrenbuckley/Nucache.Explorer#readme",
   "devDependencies": {
-    "electron": "^2.0.4"
+    "electron": "^2.0.4",
+    "electron-builder": "^20.19.2"
   },
   "dependencies": {
+    "codemirror": "^5.39.0",
     "electron-reload": "^1.2.5",
     "lodash": "^4.17.10",
-    "node-fetch": "^2.1.2"
+    "node-fetch": "^2.1.2",
+    "vue-codemirror": "^4.0.5"
+  },
+  "build": {
+    "appId": "nucache.explorer",
+    "productName": "NuCache Explorer",
+    "extraResources": {
+      "from": "../NuCache.Explorer.Server/bin/debug/",
+      "to": "NuCache.Explorer.Server/bin/debug/",
+      "filter": [
+        "**/*"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]      
+    },
+    "nsis": {
+      "deleteAppDataOnUninstall": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "NuCache Explorer",
+      "artifactName": "NuCache.Explorer.Setup.${version}.${ext}",
+      "uninstallDisplayName": "NuCache Explorer"
+    }
   }
 }

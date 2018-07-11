@@ -14,6 +14,7 @@ ipcRenderer.on('nucache.data', (event, message) => {
     console.log('nucache.data', message);
     app.__vue__.$data.nucacheOpen = true;
     app.__vue__.$data.apiData = message;
+    app.__vue__.$data.documentPosition = 1;
     app.__vue__.$data.totalDocuments = message.TotalItems;
 });
 
@@ -24,6 +25,10 @@ ipcRenderer.on('nucache.closed', (event, message) => {
 
     console.log('nucache.closed', message);
     app.__vue__.$data.nucacheOpen = false;
+    app.__vue__.$data.apiData = null;
+    app.__vue__.$data.documentPosition = 0;
+    app.__vue__.$data.totalDocuments = 0;
+    app.__vue__.$data.codeMirrorString = null;
 });
 
 

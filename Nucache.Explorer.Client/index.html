@@ -7,6 +7,31 @@
     <!-- Vue JS Lib -->
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
+    <!-- Code Mirror Lib -->
+    <script src="node_modules/codemirror/lib/codemirror.js"></script>
+
+    <!-- Code Mirror JS Mode/Language -->
+    <script src="node_modules/codemirror/mode/javascript/javascript.js"></script>
+
+    <!-- Code Mirror Code Folding Addon -->
+    <script src="node_modules/codemirror/addon/fold/foldcode.js"></script>
+    <script src="node_modules/codemirror/addon/fold/foldgutter.js"></script>
+    <script src="node_modules/codemirror/addon/fold/brace-fold.js"></script>
+    <script src="node_modules/codemirror/addon/fold/xml-fold.js"></script>
+    <script src="node_modules/codemirror/addon/fold/indent-fold.js"></script>
+    <script src="node_modules/codemirror/addon/fold//markdown-fold.js"></script>
+    <script src="node_modules/codemirror/addon/fold/comment-fold.js"></script>
+    <link rel="stylesheet" href="node_modules/codemirror/addon/fold/foldgutter.css">
+
+    <!-- Main Code Mirror CSS -->
+    <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
+
+    <!-- Monokai Code Mirror Theme CSS -->
+    <link rel="stylesheet" href="node_modules/codemirror/theme/monokai.css">
+    
+    <!-- Code Mirror Vue JS Component -->
+    <script type="text/javascript" src="node_modules/vue-codemirror/dist/vue-codemirror.js"></script>
+
     <!-- Our CSS -->
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -22,6 +47,16 @@
       <!-- Empty State -->
       <div v-if="!nucacheOpen && !isLoading">
         <h1>Open a NuCache file</h1>
+
+        <div class="drop" 
+          v-on:dragover.prevent="addDragOver" 
+          v-on:dragenter.prevent="addDragOver" 
+          v-on:drop.stop.prevent="onDrop"
+          v-on:dragleave.prevent="removeDragOver"
+          v-on:dragend.prevent="removeDragOver"
+          v-bind:class="{ isDragover: isDragging }">
+          <p>Select or Drop a NuCache file</p>
+        </div>
       </div>
 
       <!-- Raw Data -->
@@ -39,7 +74,8 @@
           <button v-bind:disabled="!hasNext" v-on:click="documentPosition += 1">Next &raquo;</button>
         </div>
 
-        <pre>{{ apiData.Items[documentPosition-1] }}</pre>
+        <codemirror v-model="codeMirrorString" :options="codeMirrorOptions"></codemirror>
+
       </div>
     </div>
     

@@ -39,3 +39,20 @@
       transform: scale(1.0);
     }
   }
+
+  .CodeMirror {
+    height: auto; /* Makes it full height of the JSON response object */
+  }
+
+.drop {
+  border: 4px dashed #ccc;
+  background-color: #f6f6f6;
+  border-radius: 2px;
+  height:150px;
+  width:150px;
+  margin:0 auto;
+}
+
+.drop.isDragover {
+  background-color: red;
+ }

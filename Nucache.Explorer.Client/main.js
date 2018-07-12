@@ -2,6 +2,9 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const process = require('child_process');
+const log = require('electron-log');
+const {autoUpdater} = require('electron-updater');
+const isDev = require('electron-is-dev');
 
 // Live reload magic
 require('electron-reload')(__dirname);
@@ -9,6 +12,14 @@ require('electron-reload')(__dirname);
 //Our Application Menu Items & logic
 require('./app-menu');
 
+//-------------------------------------------------------------------
+// Logging
+// This logging setup is not required for auto-updates to work,
+// but it sure makes debugging easier :)
+//-------------------------------------------------------------------
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -50,6 +61,10 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.once('ready', () => {
+
+  //autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdatesAndNotify();
+
   let apipath = path.join(__dirname, '..\\Nucache.Explorer.Server\\bin\\debug\\Nucache.Explorer.Server.exe');
   apiProcess = process.spawn(apipath);
 

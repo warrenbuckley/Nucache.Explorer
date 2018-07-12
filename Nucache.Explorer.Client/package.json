@@ -32,7 +32,10 @@
   },
   "dependencies": {
     "codemirror": "^5.39.0",
+    "electron-is-dev": "^0.3.0",
+    "electron-log": "^2.2.16",
     "electron-reload": "^1.2.5",
+    "electron-updater": "^2.23.3",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
     "vue-codemirror": "^4.0.5"
@@ -50,7 +53,7 @@
     "win": {
       "target": [
         "nsis"
-      ]      
+      ]
     },
     "nsis": {
       "deleteAppDataOnUninstall": true,

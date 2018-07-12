@@ -40,19 +40,48 @@
     }
   }
 
-  .CodeMirror {
-    height: auto; /* Makes it full height of the JSON response object */
-  }
+.CodeMirror {
+    height: auto;
+    margin-top: 10px;
+}
+
+body, html {
+  margin:0;
+  padding:0;
+}
+
+.drop-parent {
+  padding:10px;
+}
 
 .drop {
   border: 4px dashed #ccc;
   background-color: #f6f6f6;
   border-radius: 2px;
-  height:150px;
-  width:150px;
   margin:0 auto;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 20px);
+  box-sizing: border-box;
+  flex-direction: column;
+
 }
 
 .drop.isDragover {
-  background-color: red;
+  background-color: #e6e4e4;
  }
+
+ .drop button {
+   border: none;
+   padding:8px 5px;
+ }
+
+.error {
+  margin:10px 0;
+  color:rgba(185, 10, 10, 0.85);
+}
+
+.viewer {
+  padding:10px;
+}

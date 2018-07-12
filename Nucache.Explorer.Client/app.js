@@ -15,6 +15,7 @@ var app = new Vue({
         hasNext: true,
         totalDocuments: 0,
         isDragging: false,
+        wrongFileType: false,
         codeMirrorString: null,
         codeMirrorOptions: {
             tabSize: 4,
@@ -31,18 +32,18 @@ var app = new Vue({
     },
     methods:{
         onDrop: function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-
             //Remove some CSS class .is-dragover
             this.isDragging = false;
             
+            //reset file type check (until we recheck it in a sec)
+            this.wrongFileType = false;
+
             var allFiles = e.dataTransfer.files;
             var firstFile = allFiles[0];
 
             //File name does not end with .db
             if(firstFile.name.endsWith('.db') === false){
-                console.log('Not a .db file extension');
+                this.wrongFileType = true;
                 return;
             }
 
@@ -51,13 +52,10 @@ var app = new Vue({
 
         },
         addDragOver: function(e){
-            console.log('add drag');
-
             //Add some CSS class .is-dragover
             this.isDragging = true;
         },
         removeDragOver: function(e){
-            console.log('remove drag');
             //Remove some CSS class .is-dragover
             this.isDragging = false;
         },

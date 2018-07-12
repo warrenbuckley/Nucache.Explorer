@@ -45,22 +45,29 @@
       </div>
 
       <!-- Empty State -->
-      <div v-if="!nucacheOpen && !isLoading">
-        <h1>Open a NuCache file</h1>
-
+      <div v-if="!nucacheOpen && !isLoading" class="drop-parent">
         <div class="drop" 
+          v-on:dragstart.prevent="dragStart"
           v-on:dragover.prevent="addDragOver" 
           v-on:dragenter.prevent="addDragOver" 
           v-on:drop.stop.prevent="onDrop"
           v-on:dragleave.prevent="removeDragOver"
           v-on:dragend.prevent="removeDragOver"
           v-bind:class="{ isDragover: isDragging }">
-          <button v-on:click.stop.prevent="openFileDialog">Select or Drop a NuCache file</button>
+          
+          <div>
+            <button v-on:click.stop.prevent="openFileDialog">Select or Drop a NuCache file</button>
+          </div>
+          <div class="error" v-if="wrongFileType">
+            This is not a .db file - try again
+          </div>
+          
+
         </div>
       </div>
 
       <!-- Raw Data -->
-      <div v-if="nucacheOpen && apiData">
+      <div v-if="nucacheOpen && apiData" class="viewer">
 
         <p>{{ apiData.TotalItems }} total items took {{ apiData.StopClock }} milliseconds to read</p>
         <div>

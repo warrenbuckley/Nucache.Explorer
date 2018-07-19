@@ -140,7 +140,6 @@ function openFile(filePath, focusedWindow){
         });
 
     }).then((serverJson)=> {
-        console.log('server JSON', serverJson);
         if(serverJson){
             focusedWindow.webContents.send('nucache.data', serverJson);
             focusedWindow.webContents.send('nucache.loading', false);

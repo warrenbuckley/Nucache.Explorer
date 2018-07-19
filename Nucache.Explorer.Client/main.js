@@ -19,7 +19,8 @@ require('./app-menu');
 //-------------------------------------------------------------------
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
-log.info('App starting...');
+log.info(`App starting - Version:${app.getVersion()}`);
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -43,6 +44,9 @@ function createWindow () {
   win.loadFile('index.html');
   
   win.once('ready-to-show', () => {
+
+    log.info('Application Ready to Show...');    
+
     let currentTitle = win.getTitle();
     win.setTitle(`${currentTitle} - Version ${app.getVersion()}`);
     win.show();
@@ -62,25 +66,28 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.once('ready', () => {
 
+  log.info('Application Ready...');
+
   autoUpdater.checkForUpdatesAndNotify();
 
   let apipath = path.join(__dirname, '..\\Nucache.Explorer.Server\\bin\\debug\\Nucache.Explorer.Server.exe');
   apiProcess = process.spawn(apipath);
+  log.info(`Booting NuCache Server - ${apipath}`);
 
   apiProcess.stdout.on('data', (data) => {
-      console.log(`stdout: ${data}`);
+    log.info(`NuCache Server - stdout ${data}`);
   });
 
   apiProcess.stderr.on('data', (data) => {
-    console.log(`sterr: ${data}`);
+    log.info(`NuCache Server - stderr ${data}`);
   });
 
   apiProcess.on('error', (err) => {
-    console.log('General error', err);
+    log.info(`NuCache Server - General Error ${err}`);
   });
 
   apiProcess.on('close', (code) => {
-    console.log('close code', code);
+    log.info(`NuCache Server - Recieved Close Code ${code}`);
   });
 
   //Create Window
@@ -93,6 +100,7 @@ app.on('window-all-closed', () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
+    log.info('All windows are closed - Quit NuCache Explorer');
     app.quit();
   }
 })
@@ -107,6 +115,7 @@ app.on('activate', () => {
 
   
 app.on('quit', () => {
+  log.info('NuCache Explorer Quit - Kill NuCache Server Process');
   apiProcess.kill();
 });
 

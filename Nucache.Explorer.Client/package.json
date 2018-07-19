@@ -1,5 +1,6 @@
 {
   "name": "nucache.explorer.client",
+  "productName": "NuCache Explorer",
   "version": "1.0.0",
   "description": "An electron application to read Umbraco V8+ NuCache binary files",
   "main": "main.js",

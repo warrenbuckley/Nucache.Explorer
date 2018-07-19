@@ -1,4 +1,4 @@
-const { dialog, Menu, shell } = require('electron');
+const { dialog, Menu, shell, app } = require('electron');
 const fetch = require('node-fetch');
 
 const template = [
@@ -52,12 +52,32 @@ const template = [
     {
         label: 'Help',
         role: 'help',
-        submenu: [{
-            label: 'Learn More',
-            click: () => {
-                shell.openExternal('https://github.com/warrenbuckley/Nucache.Explorer');
+        submenu: [
+            {
+                label: 'About',
+                click: () => {
+                    dialog.showMessageBox({
+                        type: 'info',
+                        title: app.getName(),
+                        message: `${app.getName()} uses the following versions`,
+                        detail: [
+                            'Version ' + app.getVersion(),
+                            'Node ' + process.versions.node,
+                            'Chrome ' + process.versions.chrome,
+                            'Electron ' + process.versions.electron,
+                            'V8 ' + process.versions.v8,
+                            'Architecture ' + process.arch,
+                          ].join('\n')
+                    });
+                }
+            },
+            {
+                label: 'Learn More',
+                click: () => {
+                    shell.openExternal('https://github.com/warrenbuckley/Nucache.Explorer');
+                }
             }
-        }]
+        ]
     }
 ];
   

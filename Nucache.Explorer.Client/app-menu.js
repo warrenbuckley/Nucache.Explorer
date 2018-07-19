@@ -2,6 +2,7 @@ const { dialog, Menu, shell, app } = require('electron');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
+const updateCheck = require('./update-checker');
 
 const template = [
     {
@@ -107,6 +108,13 @@ const template = [
                     
                     //Open the folder that contains the log.log file
                     shell.showItemInFolder(logFile);
+                }
+            },
+            {
+                id:'nucache.updatecheck',
+                label: 'Check for Updates',
+                click: (menuItem, focusedWindow, event) => {
+                    updateCheck.checkForUpdates(menuItem, focusedWindow, event);
                 }
             },
             {

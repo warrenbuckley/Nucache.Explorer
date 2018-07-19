@@ -1,5 +1,5 @@
 'use strict';
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, dialog} = require('electron');
 const path = require('path');
 const process = require('child_process');
 const log = require('electron-log');
@@ -21,11 +21,12 @@ require('./app-menu');
 const appDirectory = app.getPath('userData');
 var logFile = path.join(appDirectory, 'logs', 'NuCache.Explorer.log.txt');
 
+autoUpdater.autoDownload = false
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 autoUpdater.logger.transports.file.file = logFile;
-log.info(`App starting - Version:${app.getVersion()}`);
 
+log.info(`App starting - Version:${app.getVersion()}`);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using CSharpTest.Net.Collections;
 using CSharpTest.Net.Serialization;
@@ -12,19 +14,21 @@ namespace Nucache.Explorer.Server.Controllers
 {
     public class NucacheController : ApiController
     {
-        public ApiResponse GetNuCacheData(string filePath)
+        public HttpResponseMessage GetNuCacheData(string filePath)
         {
             //Check for valid filepath
             if (File.Exists(filePath) == false)
             {
-                //TODO: Throw error
+                var message = $"No file exists on disk at {filePath}";
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, message);
             }
 
             //Check for file extension ends with .db
             //Don't want to attempt to any old file type
             if (Path.GetExtension(filePath) != ".db")
             {
-                //TODO: Throw error
+                var message = $"The file {filePath} is not a .db file";
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, message);
             }
 
 
@@ -74,8 +78,8 @@ namespace Nucache.Explorer.Server.Controllers
                 TotalItems = kits.Length,
                 StopClock = sw.ElapsedMilliseconds
             };
-            
-            return response;
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
     }
 }

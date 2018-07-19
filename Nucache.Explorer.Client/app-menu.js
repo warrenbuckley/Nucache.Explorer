@@ -1,5 +1,6 @@
 const { dialog, Menu, shell, app } = require('electron');
 const fetch = require('node-fetch');
+const fs = require('fs');
 
 const template = [
     {
@@ -21,18 +22,40 @@ const template = [
                     //Disable the close menu item & re-activate the open menu item
                     updateMenuEnabledState('nucache.open', true);
                     updateMenuEnabledState('nucache.close', false);
+                    updateMenuEnabledState('nucache.export', false);
 
                     //Resets the UI later to open a new nucache file
                     //By sending a signal/event that we listen for
                     focusedWindow.webContents.send('nucache.closed');
                 }
-            }   
+            },
+            {
+                id: 'nucache.export',
+                label: 'Export Documents',
+                enabled: false,
+                click: (menuItem, focusedWindow) => {
+                    //Open Save Dialog
+                    dialog.showSaveDialog({
+                        title: 'Export Documents',                        
+                        filters: [{name: 'JSON', extensions: ['json']}],
+                    }, (fileName) => {
+                        
+                        //fileName = C:\Code-Personal\Nucache.Explorer\Test Files\my-export.json
+
+                        //Send out a message with the path to the file we are saving
+                        //The app.js file will get the current status & reply back with its contents
+                        //In the reply message - we can then do the physical file save
+                        focusedWindow.webContents.send('nucache.savejson', fileName);
+                    });
+                }
+            }
         ]
     },
     {
         label: 'View',
         submenu: [
             {
+                id:'nucache.devtools',
                 label: 'Toggle Developer Tools',
                 accelerator: (() => {
                     if (process.platform === 'darwin') {
@@ -54,6 +77,7 @@ const template = [
         role: 'help',
         submenu: [
             {
+                id:'nucache.about',
                 label: 'About',
                 click: () => {
                     dialog.showMessageBox({
@@ -72,6 +96,7 @@ const template = [
                 }
             },
             {
+                id:'nucache.learn',
                 label: 'Learn More',
                 click: () => {
                     shell.openExternal('https://github.com/warrenbuckley/Nucache.Explorer');
@@ -96,6 +121,7 @@ function openFile(filePath, focusedWindow){
     //Disable the file open menu item & enable the close menu item
     updateMenuEnabledState('nucache.open', false);
     updateMenuEnabledState('nucache.close', true);
+    updateMenuEnabledState('nucache.export', true);
 
     //Send a signal/event to notify the main UI that we are loading
     focusedWindow.webContents.send('nucache.loading', true);
@@ -124,7 +150,7 @@ function openFile(filePath, focusedWindow){
 
 function openFileDialog(focusedWindow){
     dialog.showOpenDialog({
-        title: "Open NuCache",
+        title: 'Open NuCache',
         filters: [{name: 'NuCache DB', extensions: ['db']}],
         properties: ['openFile']
     }, (filePaths) =>{
@@ -146,7 +172,6 @@ ipcMain.on('dragged-file', (event, arg) => {
     var allWindows = webContents.getAllWebContents();
     var currentWindow = allWindows[0];
     
-    console.log('currentWindow', currentWindow);
     openFile(arg, currentWindow);
 
 });
@@ -158,6 +183,27 @@ ipcMain.on('open-file-dialog', (event, arg) => {
     var allWindows = webContents.getAllWebContents();
     var currentWindow = allWindows[0];
     
-    console.log('currentWindow', currentWindow);
     openFileDialog(currentWindow);
+});
+
+ipcMain.on('nucache.savejson.data', (event, arg) => {
+    //arg is a JSON object - raw JSON object to save/export & filepath to save it to
+    var jsonData = JSON.stringify(arg.data, null, '\t');
+
+    fs.writeFile(arg.file, jsonData, (err) => {
+        if (err)
+        {
+            dialog.showErrorBox({
+                title: 'Error Saving File',
+                content: err
+            });
+        }
+
+        dialog.showMessageBox({
+            title:'File Saved',
+            message:`File sucessfully exported at ${arg.file}`
+        });
+    });
+    
+
 });

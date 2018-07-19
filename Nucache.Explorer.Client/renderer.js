@@ -29,6 +29,7 @@ ipcRenderer.on('nucache.closed', (event, message) => {
     app.__vue__.$data.documentPosition = 0;
     app.__vue__.$data.totalDocuments = 0;
     app.__vue__.$data.codeMirrorString = null;
+    app.__vue__.$data.serverError = null;
 });
 
 
@@ -36,5 +37,9 @@ ipcRenderer.on('nucache.closed', (event, message) => {
 //We can then bubble this up into the UI layer
 ipcRenderer.on('nucache.error', (event, message) => {
 
-    console.log('nucache.error', message);
+    //Message is a string of JSON
+    var json = JSON.parse(message);
+    console.log('nucache.error', json.Message);
+
+    app.__vue__.$data.serverError = json.Message; 
 });

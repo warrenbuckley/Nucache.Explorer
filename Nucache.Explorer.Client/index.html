@@ -32,6 +32,9 @@
     <!-- Code Mirror Vue JS Component -->
     <script type="text/javascript" src="node_modules/vue-codemirror/dist/vue-codemirror.js"></script>
 
+    <!-- LoDash like Underscore lib -->
+    <script src="node_modules/lodash/lodash.min.js"></script>
+
     <!-- Our CSS -->
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -58,10 +61,16 @@
           <div>
             <button v-on:click.stop.prevent="openFileDialog">Select or Drop a NuCache file</button>
           </div>
+          
+          <!-- Used when dragging to give instant feedback before sending it to server -->
           <div class="error" v-if="wrongFileType">
             This is not a .db file - try again
           </div>
-          
+
+          <!-- If Server API returns a 404 or 400 -->
+          <div class="error" v-if="serverError">
+            {{ serverError }}
+          </div>         
 
         </div>
       </div>
@@ -72,13 +81,24 @@
         <p>{{ apiData.TotalItems }} total items took {{ apiData.StopClock }} milliseconds to read</p>
         <div>
           Viewing <strong>{{ documentPosition }}</strong> of <strong>{{ apiData.TotalItems }}</strong> items
-              
+        </div>
+
+        <!-- Paging through items -->
+        <div>
           <label for="currentDocument">Goto Item Number:</label>
           <input v-model.number="documentPosition" type="number" id="documentPosition" min="1"  v-bind:max="apiData.TotalItems" />
-        </div>
-        <div>
           <button v-bind:disabled="!hasPrevious" v-on:click="documentPosition -= 1">&laquo; Previous</button>
           <button v-bind:disabled="!hasNext" v-on:click="documentPosition += 1">Next &raquo;</button>
+        </div>
+
+        <!-- Super simple search/filter -->
+        <div>
+          <input type="text" name="search" placeholder="1085 or 73cbde24-84cf-484d-8621-9d2534bb910c" v-model="documentToFind"/>
+          <select  v-model="findBy">
+            <option value="Id" selected>Id</option>
+            <option value="Uid">Uid</option>
+          </select>
+          <button v-on:click="findDocument">Find</button>
         </div>
 
         <codemirror v-model="codeMirrorString" :options="codeMirrorOptions"></codemirror>

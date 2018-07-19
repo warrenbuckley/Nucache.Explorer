@@ -62,7 +62,6 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.once('ready', () => {
 
-  //autoUpdater.checkForUpdatesAndNotify();
   autoUpdater.checkForUpdatesAndNotify();
 
   let apipath = path.join(__dirname, '..\\Nucache.Explorer.Server\\bin\\debug\\Nucache.Explorer.Server.exe');

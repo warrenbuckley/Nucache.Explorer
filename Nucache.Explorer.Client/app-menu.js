@@ -82,7 +82,6 @@ function openFile(filePath, focusedWindow){
 
     const baseDomain = 'http://localhost:5698/api/Nucache';
     
-
     fetch(`${baseDomain}/GetNuCacheData?filePath=${filePath}`).then((response) => {
         if(response.ok) {
             return response.json();
@@ -91,6 +90,7 @@ function openFile(filePath, focusedWindow){
         //404, 500 etc..
         response.text().then((value) =>{
             focusedWindow.webContents.send('nucache.error', value);
+            focusedWindow.webContents.send('nucache.loading', false);
         });
 
     }).then((serverJson)=> {

@@ -16,6 +16,9 @@ var app = new Vue({
         totalDocuments: 0,
         isDragging: false,
         wrongFileType: false,
+        serverError: null,
+        documentToFind: null,
+        findBy: 'Id',
         codeMirrorString: null,
         codeMirrorOptions: {
             tabSize: 4,
@@ -62,6 +65,35 @@ var app = new Vue({
         openFileDialog: function(e){
             //Tell main.js / app-menu.js to open a file dialog window
             ipcRenderer.send('open-file-dialog');
+        },
+        findDocument: function(e){
+            //Get the value in the textbox
+            var docId = this.documentToFind;
+            
+            //Get the value in the dropdown
+            var idType = this.findBy;
+
+            //Do a lodash _.findIndex
+           var findDocPosition = _.findIndex(this.apiData.Items, function(obj) {
+
+                if(idType === 'Id'){
+                    //Id is a native JS Number - so remember to parse the string back to number
+                    return obj.Node.Id === Number(docId);
+                }
+                else if(idType === 'Uid'){
+                    return obj.Node.Uid === docId;
+                }
+            });
+
+            if(findDocPosition === -1){
+                //Did not find the item
+                //Display something in the UI?!
+            } else{
+                //Found it's location
+                //Update documentPosition number - the watch will then kick in
+                //and load the correct document
+                this.documentPosition = findDocPosition + 1;
+            }
         }
     },
     watch: {

@@ -6,6 +6,16 @@
 
         public ContentNodeKit[] Items { get; set; }
 
-        public long StopClock { get; set; }
+        public StopClock StopClock { get; set; }
+
+    }
+
+    public class StopClock
+    {
+        public int Hours { get; set; }
+        public int Minutes { get; set; }
+        public int Seconds { get; set; }
+        public int Milliseconds { get; set; }
+        public long Ticks { get; set; }
     }
 }

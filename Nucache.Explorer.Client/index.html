@@ -75,7 +75,13 @@
       <!-- Raw Data -->
       <div v-if="nucacheOpen && apiData" class="viewer">
 
-        <p>{{ apiData.TotalItems }} total items took {{ apiData.StopClock }} milliseconds to read</p>
+        <p>{{ apiData.TotalItems }} total items took the following time to read the file<br/>
+          {{ apiData.StopClock.Hours }} Hours 
+          {{ apiData.StopClock.Minutes }} Minutes 
+          {{ apiData.StopClock.Seconds }} Seconds 
+          {{ apiData.StopClock.Milliseconds }} Milliseconds 
+          {{ apiData.StopClock.Ticks }} Ticks
+        </p>
         <div>
           Viewing <strong>{{ documentPosition }}</strong> of <strong>{{ apiData.TotalItems }}</strong> items
         </div>

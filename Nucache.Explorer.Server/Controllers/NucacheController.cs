@@ -76,7 +76,14 @@ namespace Nucache.Explorer.Server.Controllers
             {
                 Items = kits,
                 TotalItems = kits.Length,
-                StopClock = sw.ElapsedMilliseconds
+                StopClock = new StopClock
+                {
+                    Hours = sw.Elapsed.Hours,
+                    Minutes = sw.Elapsed.Minutes,
+                    Seconds = sw.Elapsed.Seconds,
+                    Milliseconds = sw.Elapsed.Milliseconds,
+                    Ticks = sw.Elapsed.Ticks    
+                }
             };
 
             return Request.CreateResponse(HttpStatusCode.OK, response);

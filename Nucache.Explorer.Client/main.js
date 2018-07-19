@@ -17,8 +17,13 @@ require('./app-menu');
 // This logging setup is not required for auto-updates to work,
 // but it sure makes debugging easier :)
 //-------------------------------------------------------------------
+
+const appDirectory = app.getPath('userData');
+var logFile = path.join(appDirectory, 'logs', 'NuCache.Explorer.log.txt');
+
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
+autoUpdater.logger.transports.file.file = logFile;
 log.info(`App starting - Version:${app.getVersion()}`);
 
 

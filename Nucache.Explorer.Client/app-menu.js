@@ -1,6 +1,7 @@
 const { dialog, Menu, shell, app } = require('electron');
 const fetch = require('node-fetch');
 const fs = require('fs');
+const path = require('path');
 
 const template = [
     {
@@ -93,6 +94,19 @@ const template = [
                             'Architecture ' + process.arch,
                           ].join('\n')
                     });
+                }
+            },
+            {
+                id:'nucache.log',
+                label: 'View Log File',
+                click: () => {
+
+                    //appDirectory C:\Users\warre\AppData\Roaming\NuCache Explorer
+                    const appDirectory = app.getPath('userData');
+                    var logFile = path.join(appDirectory, 'logs', 'NuCache.Explorer.log.txt');
+                    
+                    //Open the folder that contains the log.log file
+                    shell.showItemInFolder(logFile);
                 }
             },
             {

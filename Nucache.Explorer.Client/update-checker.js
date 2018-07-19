@@ -22,7 +22,7 @@ autoUpdater.on('update-available', () => {
   dialog.showMessageBox({
     type: 'info',
     title: 'Found Updates',
-    message: 'Found updates, do you want update now?',
+    message: 'Found updates, do you want to update now?',
     buttons: ['Sure', 'No']
   }, (buttonIndex) => {
     if (buttonIndex === 0) {

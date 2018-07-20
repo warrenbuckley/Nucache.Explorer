@@ -214,23 +214,25 @@ ipcMain.on('open-file-dialog', (event, arg) => {
 });
 
 ipcMain.on('nucache.savejson.data', (event, arg) => {
-    //arg is a JSON object - raw JSON object to save/export & filepath to save it to
-    var jsonData = JSON.stringify(arg.data, null, '\t');
 
-    fs.writeFile(arg.file, jsonData, (err) => {
-        if (err)
-        {
-            dialog.showErrorBox({
-                title: 'Error Saving File',
-                content: err
+    if(arg.file){
+        //arg is a JSON object - raw JSON object to save/export & filepath to save it to
+        var jsonData = JSON.stringify(arg.data, null, '\t');
+
+        fs.writeFile(arg.file, jsonData, (err) => {
+            if (err)
+            {
+                dialog.showErrorBox({
+                    title: 'Error Saving File',
+                    content: err
+                });
+            }
+
+            dialog.showMessageBox({
+                title:'File Saved',
+                message:`File sucessfully exported at ${arg.file}`
             });
-        }
-
-        dialog.showMessageBox({
-            title:'File Saved',
-            message:`File sucessfully exported at ${arg.file}`
         });
-    });
-    
+    }
 
 });

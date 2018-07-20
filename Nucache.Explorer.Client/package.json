@@ -28,15 +28,15 @@
   },
   "homepage": "https://github.com/warrenbuckley/Nucache.Explorer#readme",
   "devDependencies": {
-    "electron": "^2.0.4",
-    "electron-builder": "^20.19.2"
+    "electron": "^2.0.5",
+    "electron-builder": "^20.23.1"
   },
   "dependencies": {
     "codemirror": "^5.39.0",
     "electron-is-dev": "^0.3.0",
     "electron-log": "^2.2.16",
     "electron-reload": "^1.2.5",
-    "electron-updater": "^2.23.3",
+    "electron-updater": "^3.0.3",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
     "vue-codemirror": "^4.0.5"
@@ -63,6 +63,23 @@
       "shortcutName": "NuCache Explorer",
       "artifactName": "NuCache.Explorer.Setup.${version}.${ext}",
       "uninstallDisplayName": "NuCache Explorer"
-    }
+    },
+    "fileAssociations": [
+      {
+        "name": "NuCache Explorer",
+        "description": "NuCache Explorer File from Umbraco V8+",
+        "ext": [
+          "db"
+        ]
+      }
+    ],
+    "protocols": [
+      {
+        "name": "NuCache Explorer File URL",
+        "schemes": [
+          "nucache"
+        ]
+      }
+    ]
   }
 }

@@ -19,7 +19,7 @@ require('./app-menu');
 //-------------------------------------------------------------------
 
 const appDirectory = app.getPath('userData');
-var logFile = path.join(appDirectory, 'logs', 'NuCache.Explorer.log.txt');
+var logFile = path.join(appDirectory, 'NuCache.Explorer.log.txt');
 
 autoUpdater.autoDownload = false
 autoUpdater.logger = log;
@@ -51,7 +51,10 @@ function createWindow () {
   
   win.once('ready-to-show', () => {
 
-    log.info('Application Ready to Show...');    
+    log.info('Application Ready to Show...');
+
+    //Register nucache:// url type - may help with file assocation stuff
+    app.setAsDefaultProtocolClient('nucache');
 
     let currentTitle = win.getTitle();
     win.setTitle(`${currentTitle} - Version ${app.getVersion()}`);

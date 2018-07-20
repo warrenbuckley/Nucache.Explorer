@@ -106,7 +106,7 @@ const template = [
 
                     //appDirectory C:\Users\warre\AppData\Roaming\NuCache Explorer
                     const appDirectory = app.getPath('userData');
-                    var logFile = path.join(appDirectory, 'logs', 'NuCache.Explorer.log.txt');
+                    var logFile = path.join(appDirectory, 'NuCache.Explorer.log.txt');
                     
                     //Open the folder that contains the log.log file
                     shell.showItemInFolder(logFile);

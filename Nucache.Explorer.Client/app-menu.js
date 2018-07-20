@@ -236,3 +236,5 @@ ipcMain.on('nucache.savejson.data', (event, arg) => {
     }
 
 });
+
+module.exports.openFile = openFile;

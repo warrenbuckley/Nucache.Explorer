@@ -1,7 +1,7 @@
 'use strict';
-const {app, BrowserWindow, dialog} = require('electron');
+const {app, BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
-const process = require('child_process');
+const child = require('child_process');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
@@ -10,7 +10,7 @@ const isDev = require('electron-is-dev');
 require('electron-reload')(__dirname);
 
 //Our Application Menu Items & logic
-require('./app-menu');
+const appMenu = require('./app-menu');
 
 //-------------------------------------------------------------------
 // Logging
@@ -32,7 +32,8 @@ log.info(`App starting - Version:${app.getVersion()}`);
 // be closed automatically when the JavaScript object is garbage collected.
 let win = BrowserWindow;
 
-let apiProcess = process.spawn;
+let apiProcess = child.spawn;
+//console.log('process.arg', process.argv);
 
 
 function createWindow () {
@@ -59,6 +60,17 @@ function createWindow () {
     let currentTitle = win.getTitle();
     win.setTitle(`${currentTitle} - Version ${app.getVersion()}`);
     win.show();
+
+    if(process.argv.length === 2){
+      //Second arg
+      //DEV it will be '.' otherwise release app it will be the file to open
+      if(process.argv[1] !== '.'){
+        var fileToOpen = process.argv[1];
+  
+        appMenu.openFile(fileToOpen, win);
+      }
+    }
+
   });
 
   // Emitted when the window is closed.
@@ -73,14 +85,13 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.once('ready', () => {
+app.once('ready', () => {  
 
   log.info('Application Ready...');
-
-  autoUpdater.checkForUpdatesAndNotify();
+  log.info(`Process Platform ${process.platform}`);
 
   let apipath = path.join(__dirname, '..\\Nucache.Explorer.Server\\bin\\debug\\Nucache.Explorer.Server.exe');
-  apiProcess = process.spawn(apipath);
+  apiProcess = child.spawn(apipath);
   log.info(`Booting NuCache Server - ${apipath}`);
 
   apiProcess.stdout.on('data', (data) => {

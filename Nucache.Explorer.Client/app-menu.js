@@ -11,6 +11,7 @@ const template = [
             {
                 id:'nucache.open',
                 label: 'Open NuCache',
+                accelerator: 'CmdOrCtrl+O',
                 click: (menuItem, focusedWindow) => {
                     openFileDialog(focusedWindow);
                 }
@@ -35,6 +36,7 @@ const template = [
                 id: 'nucache.export',
                 label: 'Export Documents',
                 enabled: false,
+                accelerator: 'CmdOrCtrl+S',
                 click: (menuItem, focusedWindow) => {
                     //Open Save Dialog
                     dialog.showSaveDialog({
@@ -144,6 +146,10 @@ function openFile(filePath, focusedWindow){
     updateMenuEnabledState('nucache.open', false);
     updateMenuEnabledState('nucache.close', true);
     updateMenuEnabledState('nucache.export', true);
+
+    //Add the file to a recent documents list
+    //Lets assume the Electron API here deals with dupes etc
+    app.addRecentDocument(filePath);
 
     //Send a signal/event to notify the main UI that we are loading
     focusedWindow.webContents.send('nucache.loading', true);

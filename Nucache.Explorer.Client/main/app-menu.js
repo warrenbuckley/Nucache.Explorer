@@ -78,12 +78,12 @@ const template = [
                             minimizable: false,
                             maximizable: false,                        
                             resizable: true,
-                            show: false,                            
+                            show: false                     
                         });
 
                         child.setMenu(null);
 
-                        child.loadURL('https://github.com');
+                        child.loadFile('preferences.html');
 
                         child.once('ready-to-show', () => {
                             child.show();
@@ -183,7 +183,7 @@ function openFile(filePath, focusedWindow){
     //Disable the file open menu item & enable the close menu item
     updateMenuEnabledState('nucache.open', false);
     updateMenuEnabledState('nucache.close', true);
-    updateMenuEnabledState('nucache.export', true);
+    updateMenuEnabledState('nucache.export', true);    
     
     //Send a signal/event to notify the main UI that we are loading
     focusedWindow.webContents.send('nucache.loading', true);

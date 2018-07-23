@@ -32,6 +32,7 @@
     "electron-builder": "^20.23.1"
   },
   "dependencies": {
+    "about-window": "^1.12.1",
     "codemirror": "^5.39.0",
     "electron-is-dev": "^0.3.0",
     "electron-log": "^2.2.16",

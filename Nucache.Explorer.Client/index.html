@@ -124,11 +124,11 @@
     
     <script>
       //The super simple Vue.js init
-      require('./app.js');
+      require('./renderer/app.js');
 
       // Renderer - the proxy that listens from events/signals emitted from app-menu.js
       // Which updates the properties in Vue - which thus updates our UI
-      require('./renderer.js');
+      require('./renderer/app-events.js');
     </script>
   </body>
 </html>

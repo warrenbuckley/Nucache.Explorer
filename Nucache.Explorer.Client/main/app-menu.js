@@ -1,9 +1,11 @@
-const { dialog, Menu, shell, app } = require('electron');
+const { dialog, Menu, shell, app, BrowserWindow } = require('electron');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const updateCheck = require('./update-checker');
 const log = require('electron-log');
+
+let child = null;
 
 const template = [
     {
@@ -52,6 +54,44 @@ const template = [
                         //In the reply message - we can then do the physical file save
                         focusedWindow.webContents.send('nucache.savejson', fileName);
                     });
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                id: 'nucache.pref',
+                label: 'Preferences',
+                accelerator: 'CmdOrCtrl+,',
+                click: (menuItem, focusedWindow) => {
+
+                    if(!child){
+                        child = new BrowserWindow({
+                            parent: focusedWindow,
+                            width:500,
+                            height:400,
+                            center:true,
+                            enableLargerThanScreen: false,
+                            fullscreenable: false,
+                            title: 'NuCache Explorer - Preferences',
+                            minimizable: false,
+                            maximizable: false,                        
+                            resizable: true,
+                            show: false,                            
+                        });
+
+                        child.setMenu(null);
+
+                        child.loadURL('https://github.com');
+
+                        child.once('ready-to-show', () => {
+                            child.show();
+                        });
+                        
+                        child.once('closed', () => {
+                            child = null;
+                        });
+                    }                    
                 }
             }
         ]
@@ -131,8 +171,10 @@ const template = [
     }
 ];
   
-const menu = Menu.buildFromTemplate(template)
+const menu = Menu.buildFromTemplate(template);
+
 Menu.setApplicationMenu(menu);
+
 
 function updateMenuEnabledState(menuId, enabledState){
     var menuToUpdate = menu.getMenuItemById(menuId);

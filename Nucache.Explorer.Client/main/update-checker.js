@@ -8,8 +8,8 @@
  * 1. create `updater.js` for the code snippet
  * 2. require `updater.js` for menu implementation, and set `checkForUpdates` callback from `updater` for the click property of `Check Updates...` MenuItem.
  */
-const { dialog } = require('electron')
-const { autoUpdater } = require('electron-updater')
+const { dialog } = require('electron');
+const { autoUpdater } = require('electron-updater');
 
 let updater
 //autoUpdater.autoDownload = false

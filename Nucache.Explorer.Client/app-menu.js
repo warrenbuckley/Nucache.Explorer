@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const updateCheck = require('./update-checker');
+const log = require('electron-log');
 
 const template = [
     {
@@ -109,7 +110,7 @@ const template = [
                     var logFile = path.join(appDirectory, 'NuCache.Explorer.log.txt');
                     
                     //Open the folder that contains the log.log file
-                    shell.showItemInFolder(logFile);
+                    shell.openItem(logFile);
                 }
             },
             {
@@ -146,11 +147,7 @@ function openFile(filePath, focusedWindow){
     updateMenuEnabledState('nucache.open', false);
     updateMenuEnabledState('nucache.close', true);
     updateMenuEnabledState('nucache.export', true);
-
-    //Add the file to a recent documents list
-    //Lets assume the Electron API here deals with dupes etc
-    app.addRecentDocument(filePath);
-
+    
     //Send a signal/event to notify the main UI that we are loading
     focusedWindow.webContents.send('nucache.loading', true);
 
@@ -163,12 +160,22 @@ function openFile(filePath, focusedWindow){
 
         //404, 500 etc..
         response.text().then((value) =>{
+
+            log.error(`Error from NuCache Server API = ${value}`);
+
             focusedWindow.webContents.send('nucache.error', value);
             focusedWindow.webContents.send('nucache.loading', false);
         });
 
     }).then((serverJson)=> {
         if(serverJson){
+
+            log.info(`The file ${filePath} took ${serverJson.StopClock.Hours} Hours, ${serverJson.StopClock.Minutes} Minutes, ${serverJson.StopClock.Seconds} Seconds, ${serverJson.StopClock.Milliseconds} Milliseconds, ${serverJson.StopClock.Ticks} Ticks to read ${serverJson.TotalItems} documents`);
+
+            //Add the file to a recent documents list
+            //Lets assume the Electron API here deals with dupes etc
+            app.addRecentDocument(filePath);          
+
             focusedWindow.webContents.send('nucache.data', serverJson);
             focusedWindow.webContents.send('nucache.loading', false);
         }
@@ -222,6 +229,8 @@ ipcMain.on('nucache.savejson.data', (event, arg) => {
         fs.writeFile(arg.file, jsonData, (err) => {
             if (err)
             {
+                log.error(`Error saving/exporting file = ${err}`);
+
                 dialog.showErrorBox({
                     title: 'Error Saving File',
                     content: err

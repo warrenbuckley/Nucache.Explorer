@@ -39,7 +39,8 @@ var app = new Vue({
             matchBrackets: true,
             showCursorWhenSelecting: true,
             theme: 'monokai',
-            readOnly: true            
+            readOnly: true,
+            extraKeys: {"Alt-F": "findPersistent"}
           }
     },
     methods:{

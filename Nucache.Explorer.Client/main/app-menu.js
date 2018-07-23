@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const updateCheck = require('./update-checker');
 const log = require('electron-log');
+const openAboutWindow = require('about-window').default;
 
 let child = null;
 
@@ -124,19 +125,13 @@ const template = [
             {
                 id:'nucache.about',
                 label: 'About',
-                click: () => {
-                    dialog.showMessageBox({
-                        type: 'info',
-                        title: app.getName(),
-                        message: `${app.getName()} uses the following versions`,
-                        detail: [
-                            'Version ' + app.getVersion(),
-                            'Node ' + process.versions.node,
-                            'Chrome ' + process.versions.chrome,
-                            'Electron ' + process.versions.electron,
-                            'V8 ' + process.versions.v8,
-                            'Architecture ' + process.arch,
-                          ].join('\n')
+                click: () => {                    
+                    openAboutWindow({
+                        icon_path: 'icon.png',
+                        win_options: {
+                            maximizable: false,
+                            minimizable: false
+                        }
                     });
                 }
             },

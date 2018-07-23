@@ -33,8 +33,6 @@ log.info(`App starting - Version:${app.getVersion()}`);
 let win = BrowserWindow;
 
 let apiProcess = child.spawn;
-//console.log('process.arg', process.argv);
-
 
 function createWindow () {
   // Create the browser window.
@@ -56,6 +54,12 @@ function createWindow () {
 
     //Register nucache:// url type - may help with file assocation stuff
     app.setAsDefaultProtocolClient('nucache');
+    
+    var result = app.setJumpList([      
+      { type: 'frequent' }
+    ]);
+
+    log.info(`Result of adding jumplist = ${result}`);
 
     let currentTitle = win.getTitle();
     win.setTitle(`${currentTitle} - Version ${app.getVersion()}`);
@@ -90,7 +94,7 @@ app.once('ready', () => {
   log.info('Application Ready...');
   log.info(`Process Platform ${process.platform}`);
 
-  let apipath = path.join(__dirname, '..\\Nucache.Explorer.Server\\bin\\debug\\Nucache.Explorer.Server.exe');
+  let apipath = path.join(__dirname, '..\\..\\Nucache.Explorer.Server\\bin\\debug\\Nucache.Explorer.Server.exe');
   apiProcess = child.spawn(apipath);
   log.info(`Booting NuCache Server - ${apipath}`);
 
@@ -138,6 +142,8 @@ app.on('quit', () => {
   log.info('NuCache Explorer Quit - Kill NuCache Server Process');
   apiProcess.kill();
 });
+
+
 
   
   // In this file you can include the rest of your app's specific main process

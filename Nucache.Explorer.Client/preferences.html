@@ -3,14 +3,23 @@
   <head>
     <meta charset="UTF-8">
     <title>NuCache Explorer - Preferences</title>
+
+    <script src="renderer/preferences.js"></script>
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
    
     <h1>Preferences</h1>
 
+    <script>document.write(process.versions.node)</script>
+
     <label for="theme">Code Editor Theme:</label>
-    <select name="theme">
-        <option value="Monkai">Monkai (Default)</option>
+    <select name="theme" id="theme-selector">
+        <option value="monkai">Monkai (Default)</option>
+        <option value="neat">Neat</option>
+        <option value="shadowfox">Shadow Fox</option>
     </select>
 
   </body>

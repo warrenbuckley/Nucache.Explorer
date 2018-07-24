@@ -51,3 +51,7 @@ ipcRenderer.on('nucache.savejson', (event, message) => {
     ipcRenderer.send('nucache.savejson.data', { data: jsonData, file: filePath});
 
 });
+
+ipcRenderer.on('nucache.theme', (event, message) => {
+    console.log('SELECTED THEME', message);
+});

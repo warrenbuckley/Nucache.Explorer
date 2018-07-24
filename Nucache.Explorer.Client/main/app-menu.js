@@ -81,7 +81,7 @@ const template = [
                             show: false                     
                         });
 
-                        child.setMenu(null);
+                        //child.setMenu(null);
 
                         child.loadFile('preferences.html');
 
@@ -282,5 +282,17 @@ ipcMain.on('nucache.savejson.data', (event, arg) => {
     }
 
 });
+
+//This comes from the preference window & we are going to simply proxy it back out
+//So the main window can listen for it & update the Vue properties
+//Will contain the string of the theme such as 'monkai' or similar
+ipcMain.on('nucache.theme', (event, arg) => {
+
+    log.info('got the message in the main (app-menu.js)', arg);
+    
+    //Do webContents send in parent browser window
+    event.sender.browserWindowOptions.parent.webContents.send('nucache.theme', arg);  
+  });
+
 
 module.exports.openFile = openFile;

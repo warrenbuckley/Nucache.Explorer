@@ -54,4 +54,6 @@ ipcRenderer.on('nucache.savejson', (event, message) => {
 
 ipcRenderer.on('nucache.theme', (event, message) => {
     console.log('SELECTED THEME', message);
+
+    app.__vue__.$data.codeMirrorOptions.theme = message;
 });

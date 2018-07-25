@@ -6,6 +6,9 @@ const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
 const isDev = require('electron-is-dev');
 
+const Store = require('electron-store');
+const store = new Store();
+
 // Live reload magic
 require('electron-reload')(__dirname);
 
@@ -61,6 +64,13 @@ function createWindow () {
 
     log.info(`Result of adding jumplist = ${result}`);
 
+    //App is ready - so lets get the theme value from the config
+    //and send it out as an IPC message to the main renderer/window thats listening for it
+    //Which in turn will update the Vue object & thus CodeMirror
+    var selectedTheme = store.get('theme', 'neat');
+    win.webContents.send('nucache.theme', selectedTheme);
+
+
     let currentTitle = win.getTitle();
     win.setTitle(`${currentTitle} - Version ${app.getVersion()}`);
     win.show();
@@ -74,6 +84,8 @@ function createWindow () {
         appMenu.openFile(fileToOpen, win);
       }
     }
+
+    
 
   });
 

@@ -41,6 +41,7 @@
     "electron-updater": "^3.0.3",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",
+    "vue": "^2.5.16",
     "vue-codemirror": "^4.0.5"
   },
   "build": {

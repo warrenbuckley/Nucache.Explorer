@@ -1,14 +1,5 @@
 var _ = require('lodash');
 const { ipcRenderer } = require('electron'); //Send message back to main.js & app-menu.js that can do the Web API call
-const log = require('electron-log');
-
-log.info('Clientside app.js loading');
-log.info('Determining version info...');
-log.info(`Node Version: ${process.versions.node}`);
-log.info(`Chrome Version: ${process.versions.chrome}`);
-log.info(`Electron Version: ${process.versions.electron}`);
-log.info(`V8 Version: ${process.versions.v8}`);
-log.info(`Architecture: ${process.arch}`);
 
 var VueCodemirror = require('vue-codemirror');
 Vue.use(VueCodemirror);

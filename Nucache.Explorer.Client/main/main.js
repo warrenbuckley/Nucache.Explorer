@@ -1,10 +1,9 @@
 'use strict';
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow } = require('electron');
 const path = require('path');
 const child = require('child_process');
 const log = require('electron-log');
 const {autoUpdater} = require('electron-updater');
-const isDev = require('electron-is-dev');
 
 const Store = require('electron-store');
 const store = new Store();
@@ -54,6 +53,12 @@ function createWindow () {
   win.once('ready-to-show', () => {
 
     log.info('Application Ready to Show...');
+    log.info('Determining version info...');
+    log.info(`Node Version: ${process.versions.node}`);
+    log.info(`Chrome Version: ${process.versions.chrome}`);
+    log.info(`Electron Version: ${process.versions.electron}`);
+    log.info(`V8 Version: ${process.versions.v8}`);
+    log.info(`Architecture: ${process.arch}`);
 
     //Register nucache:// url type - may help with file assocation stuff
     app.setAsDefaultProtocolClient('nucache');

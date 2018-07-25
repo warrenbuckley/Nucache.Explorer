@@ -14,6 +14,8 @@ require('electron-reload')(__dirname);
 //Our Application Menu Items & logic
 const appMenu = require('./app-menu');
 
+require('./ipc-events');
+
 //-------------------------------------------------------------------
 // Logging
 // This logging setup is not required for auto-updates to work,
@@ -90,8 +92,6 @@ function createWindow () {
       }
     }
 
-    
-
   });
 
   // Emitted when the window is closed.
@@ -159,9 +159,3 @@ app.on('quit', () => {
   log.info('NuCache Explorer Quit - Kill NuCache Server Process');
   apiProcess.kill();
 });
-
-
-
-  
-  // In this file you can include the rest of your app's specific main process
-  // code. You can also put them in separate files and require them here.

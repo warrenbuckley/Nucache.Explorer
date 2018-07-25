@@ -52,8 +52,12 @@ ipcRenderer.on('nucache.savejson', (event, message) => {
 
 });
 
+//On application load - the theme config setting is read and sent here
+//So we can update to the correct theme at boot
+//Also when the theme dropdown is changed - we will get the chosen theme so we can update
+//Code Mirror with the correct theme prop (applies some container class)
+//And we also go and load the correct external CSS file into the DOM
 ipcRenderer.on('nucache.theme', (event, message) => {
-    console.log('SELECTED THEME', message);
-
+    
     app.__vue__.$data.codeMirrorOptions.theme = message;
 });

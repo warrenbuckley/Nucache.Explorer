@@ -67,7 +67,7 @@ function createWindow () {
     //App is ready - so lets get the theme value from the config
     //and send it out as an IPC message to the main renderer/window thats listening for it
     //Which in turn will update the Vue object & thus CodeMirror
-    var selectedTheme = store.get('theme', 'neat');
+    var selectedTheme = store.get('theme', 'monokai');
     win.webContents.send('nucache.theme', selectedTheme);
 
 

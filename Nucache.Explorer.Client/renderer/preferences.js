@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //Set selected theme from user stored preference from key 'theme' if nothing set then
     //falback to our default theme monokai
-    var selectedTheme = store.get('theme', 'neat');
+    var selectedTheme = store.get('theme', 'monokai');
     themeSelector.value = selectedTheme;
 
 });

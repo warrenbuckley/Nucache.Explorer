@@ -81,7 +81,7 @@ const template = [
                             show: false                     
                         });
 
-                        //child.setMenu(null);
+                        child.setMenu(null);
 
                         child.loadFile('preferences.html');
 

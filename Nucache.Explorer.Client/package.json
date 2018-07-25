@@ -38,6 +38,7 @@
     "electron-is-dev": "^0.3.0",
     "electron-log": "^2.2.16",
     "electron-reload": "^1.2.5",
+    "electron-store": "^2.0.0",
     "electron-updater": "^3.0.3",
     "lodash": "^4.17.10",
     "node-fetch": "^2.1.2",

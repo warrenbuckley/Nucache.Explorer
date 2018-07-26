@@ -4,7 +4,7 @@ const { ipcRenderer } = require('electron');
 //We will send a loading with a bool back to toggle UI
 ipcRenderer.on('nucache.loading', (event, message) => {
 
-    app.__vue__.$data.isLoading = message;        
+    app.__vue__.isLoading = message;        
 });
 
 //This will contain the RAW JSON payload returned from the API
@@ -21,12 +21,12 @@ ipcRenderer.on('nucache.data', (event, message) => {
 //We can update the UI to some kind of reset state
 ipcRenderer.on('nucache.closed', (event, message) => {
 
-    app.__vue__.$data.nucacheOpen = false;
-    app.__vue__.$data.apiData = null;
-    app.__vue__.$data.documentPosition = 0;
-    app.__vue__.$data.totalDocuments = 0;
-    app.__vue__.$data.codeMirrorString = null;
-    app.__vue__.$data.serverError = null;
+    app.__vue__.nucacheOpen = false;
+    app.__vue__.apiData = null;
+    app.__vue__.documentPosition = 0;
+    app.__vue__.totalDocuments = 0;
+    app.__vue__.codeMirrorString = null;
+    app.__vue__.serverError = null;
 });
 
 
@@ -36,7 +36,7 @@ ipcRenderer.on('nucache.error', (event, message) => {
 
     //Message is a string of JSON
     var json = JSON.parse(message);
-    app.__vue__.$data.serverError = json.Message; 
+    app.__vue__.serverError = json.Message; 
 });
 
 //When the application menu - wants to save/export the JSON
@@ -45,7 +45,7 @@ ipcRenderer.on('nucache.savejson', (event, message) => {
     //message contains the filename/path
     // C:\Code-Personal\Nucache.Explorer\Test Files\my-export.json
     var filePath = message;
-    var jsonData = app.__vue__.$data.apiData;
+    var jsonData = app.__vue__.apiData;
 
     //Let's reply back with a new message back so that
     ipcRenderer.send('nucache.savejson.data', { data: jsonData, file: filePath});
@@ -59,5 +59,12 @@ ipcRenderer.on('nucache.savejson', (event, message) => {
 //And we also go and load the correct external CSS file into the DOM
 ipcRenderer.on('nucache.theme', (event, message) => {
     
-    app.__vue__.$data.codeMirrorOptions.theme = message;
+    app.__vue__.codeMirrorOptions.theme = message;
+});
+
+ipcRenderer.on('nucache.codemirror.command', (event, message) => {
+
+    console.log('Recieved codemirror command to execute', message);
+    app.__vue__.$refs.myCm.cminstance.execCommand(message);
+
 });

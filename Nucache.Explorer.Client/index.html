@@ -110,7 +110,7 @@
           <button v-on:click="findDocument">Find</button>
         </div>
 
-        <codemirror v-model="codeMirrorString" :options="codeMirrorOptions"></codemirror>
+        <codemirror ref="myCm" v-model="codeMirrorString" :options="codeMirrorOptions"></codemirror>
 
       </div>
     </div>

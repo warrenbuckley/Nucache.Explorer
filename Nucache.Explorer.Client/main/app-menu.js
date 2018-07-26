@@ -30,6 +30,11 @@ const template = [
                     updateMenuEnabledState('nucache.close', false);
                     updateMenuEnabledState('nucache.export', false);
 
+                    updateMenuEnabledState('nucache.find', false);
+                    updateMenuEnabledState('nucache.find.next', false);
+                    updateMenuEnabledState('nucache.find.prev', false);
+                    updateMenuEnabledState('nucache.goto', false);
+
                     //Resets the UI later to open a new nucache file
                     //By sending a signal/event that we listen for
                     focusedWindow.webContents.send('nucache.closed');
@@ -92,6 +97,53 @@ const template = [
                             child = null;
                         });
                     }                    
+                }
+            }
+        ]
+    },
+    {
+        label: 'Edit',
+        submenu: [
+            {
+                id: 'nucache.find',
+                label: 'Find',
+                enabled: false,
+                accelerator: 'CmdOrCtrl+F',
+                click: (menuItem, focusedWindow) => {
+                    //Send message via focusedWindow.webcontents.send
+                    //One generic message 'nuchache.codemirror.command'
+                    focusedWindow.webContents.send('nucache.codemirror.command', 'findPersistent');
+                }
+            },
+            {
+                id: 'nucache.find.next',
+                label: 'Find Next',
+                enabled: false,
+                click: (menuItem, focusedWindow) => {
+                    //Send message via focusedWindow.webcontents.send
+                    //One generic message 'nuchache.codemirror.command'
+                    focusedWindow.webContents.send('nucache.codemirror.command', 'findPersistentNext');
+                }
+            },
+            {
+                id: 'nucache.find.prev',
+                label: 'Find Previous',
+                enabled: false,
+                click: (menuItem, focusedWindow) => {
+                    //Send message via focusedWindow.webcontents.send
+                    //One generic message 'nuchache.codemirror.command'
+                    focusedWindow.webContents.send('nucache.codemirror.command', 'findPersistentPrev');
+                }
+            },
+            {
+                id: 'nucache.goto',
+                label: 'Goto',
+                enabled: false,
+                accelerator: 'CmdOrCtrl+G',
+                click: (menuItem, focusedWindow) => {
+                    //Send message via focusedWindow.webcontents.send
+                    //One generic message 'nuchache.codemirror.command'
+                    focusedWindow.webContents.send('nucache.codemirror.command', 'jumpToLine');
                 }
             }
         ]
@@ -182,8 +234,13 @@ function openFile(filePath, focusedWindow){
     //Disable the file open menu item & enable the close menu item
     updateMenuEnabledState('nucache.open', false);
     updateMenuEnabledState('nucache.close', true);
-    updateMenuEnabledState('nucache.export', true);    
-    
+    updateMenuEnabledState('nucache.export', true);
+
+    updateMenuEnabledState('nucache.find', true);
+    updateMenuEnabledState('nucache.find.next', true);
+    updateMenuEnabledState('nucache.find.prev', true);
+    updateMenuEnabledState('nucache.goto', true);
+
     //Send a signal/event to notify the main UI that we are loading
     focusedWindow.webContents.send('nucache.loading', true);
 

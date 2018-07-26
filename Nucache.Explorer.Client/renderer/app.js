@@ -34,7 +34,77 @@ var app = new Vue({
             extraKeys: {"Alt-F": "findPersistent"}
           }
     },
-    methods:{
+     //Magic VUE Lifecycle method - created
+     //This is where we register alot of ipc message listeners to update our vue properties
+    created: function(e){
+
+        //When we are trying to fetch an API response
+        //We will send a loading with a bool back to toggle UI
+        ipcRenderer.on('nucache.loading', (event, message) => {
+
+            this.isLoading = message; 
+        });
+
+        //This will contain the RAW JSON payload returned from the API
+        ipcRenderer.on('nucache.data', (event, message) => {
+
+            this.nucacheOpen = true;
+            this.apiData = message;
+            this.documentPosition = 1;
+            this.totalDocuments = message.TotalItems;
+        });
+
+        //When the user closes the file from the file menu
+        //We can update the UI to some kind of reset state
+        ipcRenderer.on('nucache.closed', (event, message) => {
+
+            this.nucacheOpen = false;
+            this.apiData = null;
+            this.documentPosition = 0;
+            this.totalDocuments = 0;
+            this.codeMirrorString = null;
+            this.serverError = null;
+        });
+
+
+        //If we get any errors from the API server returned
+        //We can then bubble this up into the UI layer
+        ipcRenderer.on('nucache.error', (event, message) => {
+
+            //Message is a string of JSON
+            var json = JSON.parse(message);
+            this.serverError = json.Message; 
+        });
+
+        //When the application menu - wants to save/export the JSON
+        ipcRenderer.on('nucache.savejson', (event, message) => {
+
+            //message contains the filename/path
+            // C:\Code-Personal\Nucache.Explorer\Test Files\my-export.json
+            var filePath = message;
+            var jsonData = this.apiData;
+
+            //Let's reply back with a new message back so that
+            ipcRenderer.send('nucache.savejson.data', { data: jsonData, file: filePath});
+
+        });
+
+        //On application load - the theme config setting is read and sent here
+        //So we can update to the correct theme at boot
+        //Also when the theme dropdown is changed - we will get the chosen theme so we can update
+        //Code Mirror with the correct theme prop (applies some container class)
+        //And we also go and load the correct external CSS file into the DOM
+        ipcRenderer.on('nucache.theme', (event, message) => {
+            
+            this.codeMirrorOptions.theme = message;
+        });
+
+        ipcRenderer.on('nucache.codemirror.command', (event, message) => {
+
+            this.$refs.myCm.cminstance.execCommand(message);
+        });
+    },
+    methods:{             
         onDrop: function(e) {
             //Remove some CSS class .is-dragover
             this.isDragging = false;

@@ -31,7 +31,7 @@ var app = new Vue({
             showCursorWhenSelecting: true,
             theme: 'monokai',
             readOnly: true,
-            extraKeys: {"Alt-F": "findPersistent"}
+            keyMap: 'basic'
           }
     },
      //Magic VUE Lifecycle method - created

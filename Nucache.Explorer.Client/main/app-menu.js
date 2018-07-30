@@ -176,9 +176,9 @@ const template = [
             {
                 id:'nucache.about',
                 label: 'About',
-                click: () => {                    
-                    openAboutWindow({
-                        icon_path: 'icon.png',
+                click: () => {
+                    openAboutWindow({                        
+                        icon_path: path.join(__dirname, '..', 'build', 'icon.png'),
                         win_options: {
                             maximizable: false,
                             minimizable: false

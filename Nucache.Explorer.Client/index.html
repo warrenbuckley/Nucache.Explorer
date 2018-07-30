@@ -88,31 +88,39 @@
       <!-- Raw Data -->
       <div v-if="nucacheOpen && apiData" class="viewer">
 
-        <div>
-          Viewing <strong>{{ documentPosition }}</strong> of <strong>{{ apiData.TotalItems }}</strong> items
-        </div>
+        <div class="options-group">
+            
+              <!-- Paging through items -->
+              <div class="options-item left">
+                  <input class="text" type="text" name="search" placeholder="1085 or 73cbde24-84cf-484d-8621-9d2534bb910c" v-model="documentToFind"/>
+                  <select class="select" v-model="findBy">
+                    <option value="Id" selected>Id</option>
+                    <option value="Uid">Uid</option>
+                  </select>
+                  <button class="button" v-on:click="findDocument">Find</button>
+                </div>
 
-        <!-- Paging through items -->
-        <div>
-          <label for="currentDocument">Goto Item Number:</label>
-          <input v-model.number="documentPosition" type="number" id="documentPosition" min="1"  v-bind:max="apiData.TotalItems" />
-          <button v-bind:disabled="!hasPrevious" v-on:click="documentPosition -= 1">&laquo; Previous</button>
-          <button v-bind:disabled="!hasNext" v-on:click="documentPosition += 1">Next &raquo;</button>
-        </div>
+              <div class="options-item center">
+                <p>Viewing <strong>{{ documentPosition }}</strong> of <strong>{{ apiData.TotalItems }}</strong> items</p>
+              </div>
 
-        <!-- Super simple search/filter -->
-        <div>
-          <input type="text" name="search" placeholder="1085 or 73cbde24-84cf-484d-8621-9d2534bb910c" v-model="documentToFind"/>
-          <select  v-model="findBy">
-            <option value="Id" selected>Id</option>
-            <option value="Uid">Uid</option>
-          </select>
-          <button v-on:click="findDocument">Find</button>
+              <!-- Super simple search/filter -->
+              <div class="options-item right">
+                
+                <button class="button" v-bind:disabled="!hasPrevious" v-on:click="documentPosition -= 1">&laquo; Previous</button>
+
+                <input class="number" v-model.number="documentPosition" type="number" id="documentPosition" min="1"  v-bind:max="apiData.TotalItems" />
+                <button class="button" v-bind:disabled="!hasNext" v-on:click="documentPosition += 1">Next &raquo;</button>
+              
+              </div>
+
         </div>
 
         <codemirror ref="myCm" v-model="codeMirrorString" :options="codeMirrorOptions"></codemirror>
 
       </div>
+        
+      
     </div>
     
     <script>

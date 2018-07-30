@@ -178,7 +178,7 @@ const template = [
                 label: 'About',
                 click: () => {
                     openAboutWindow({                        
-                        icon_path: path.join(__dirname, '..', 'build', 'icon.png'),
+                        icon_path: path.join(__dirname, '..', 'about-icon.png'),
                         win_options: {
                             maximizable: false,
                             minimizable: false

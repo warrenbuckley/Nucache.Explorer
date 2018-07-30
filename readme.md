@@ -3,6 +3,7 @@
 
 A desktop utility to view and explore Umbraco V8+ Nucache files which cannot be viewed with a text editor, hence a need for this tool.
 
+![Nucache Explorer desktop application in use](screenshot.png)
 
 ## NuCache.Explorer.Server
 The web API is a self contained OWIN/Katana console application, similar to how newer .NET Core apps can be run.
